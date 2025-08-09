@@ -56,3 +56,9 @@ class Player(CircleShape):
         shot = Shot(self.position.x, self.position.y)
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         self.timer = PLAYER_SHOOT_COOLDOWN  # Reset the cooldown timer
+    
+    def gain_shield(self):
+        if self.shield < 3:
+            self.shield += 1
+        else:
+            self.shield = 3
