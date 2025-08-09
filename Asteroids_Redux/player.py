@@ -8,6 +8,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0  # Player's rotation angle
         self.timer = 0  # Timer for shooting cooldown
+        self.shield = 0
 
     # in the player class
     def triangle(self):
@@ -19,7 +20,14 @@ class Player(CircleShape):
         return [a, b, c]
 
     def draw(self, screen):
-        pygame.draw.polygon(screen, (255, 255, 255), self.triangle(), width = 2)
+        if self.shield == 1:
+            pygame.draw.polygon(screen, LIGHT_BLUE, self.triangle(), width = 2)
+        elif self.shield == 2:
+            pygame.draw.polygon(screen, BLUE, self.triangle(), width = 2)
+        elif self.shield == 3:
+            pygame.draw.polygon(screen, DARK_BLUE, self.triangle(), width = 2)
+        else:
+            pygame.draw.polygon(screen, WHITE, self.triangle(), width = 2)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
