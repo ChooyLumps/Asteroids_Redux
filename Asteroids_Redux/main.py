@@ -12,6 +12,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
+    score = 0
     
     updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -45,19 +46,23 @@ def main():
                     asteroid.kill()  # Destroy the asteroid if player has shield
                 else:
                     print("Game Over")
+                    print(f"Final Score: {score}")
                     exit()
             for shot in shots:
                 if asteroid.get_collision(shot) == True:
                     asteroid.split()
                     shot.kill()
+                    score += 10
         for shield in shields:
             if shield.get_collision(player) == True:
                 player.gain_shield()
                 shield.kill()
+                score += 5
         for sprite in drawable:
             sprite.draw(screen)
         pygame.display.flip()  # Update the display
         dt = clock.tick(60) / 1000 # Limit to 60 FPS
+        score += 1
         
 
 if __name__ == "__main__":
