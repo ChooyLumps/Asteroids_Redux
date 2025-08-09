@@ -10,8 +10,10 @@ def main():
     
     updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    astertoids = pygame.sprite.Group()
 
     Player.containers = updateable, drawable
+    Asteroid.containers = updateable, drawable, astertoids
     
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     
