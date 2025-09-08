@@ -40,6 +40,11 @@ def main():
 
         # Check for collisions
         for asteroid in astertoids:
+            for second_asteroid in astertoids:
+                if asteroid != second_asteroid and asteroid.get_collision(second_asteroid) == True:
+                    # Simple collision response: just reverse their velocities
+                    asteroid.velocity = -asteroid.velocity
+                    second_asteroid.velocity = -second_asteroid.velocity
             if asteroid.get_collision(player) == True:
                 if player.shield > 0:
                     player.shield -= 1
