@@ -30,6 +30,7 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroid_field = AsteroidField()
     shield_field = ShieldField()
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -40,11 +41,12 @@ def main():
 
         # Check for collisions
         for asteroid in astertoids:
-            for second_asteroid in astertoids:
-                if asteroid != second_asteroid and asteroid.get_collision(second_asteroid) == True:
-                    # Simple collision response: just reverse their velocities
-                    asteroid.velocity = -asteroid.velocity
-                    second_asteroid.velocity = -second_asteroid.velocity
+            if asteroid != None:
+                asteroid_bounce = asteroid.bump()
+                asteroid_bounce(astertoids)
+                asteroid_bounce(shields)
+            if asteroid.get_touching_edge():
+                asteroid.kill()
             if asteroid.get_collision(player) == True:
                 if player.shield > 0:
                     player.shield -= 1
@@ -59,6 +61,9 @@ def main():
                     shot.kill()
                     score += 10
         for shield in shields:
+            shield_bounce = shield.bump()
+            shield_bounce(shields)
+            shield_bounce(astertoids)
             if shield.get_collision(player) == True:
                 player.gain_shield()
                 shield.kill()
